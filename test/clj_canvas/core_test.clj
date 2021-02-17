@@ -1,5 +1,5 @@
 (ns clj-canvas.core-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [deftest is testing]]
             [clj-canvas.core :as core]))
 
 (def fading-card (get core/cards-by-name "Fading"))

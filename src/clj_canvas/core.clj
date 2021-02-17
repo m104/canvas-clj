@@ -36,7 +36,7 @@
        0))
    ; Score if all elements are present at least once
    :variety
-   (fn [slots]
+   (fn [_]
      (if nil ; TODO
        1
        0))})

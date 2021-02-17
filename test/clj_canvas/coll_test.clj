@@ -1,5 +1,5 @@
 (ns clj-canvas.coll-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [deftest is testing]]
             [clj-canvas.coll :as coll]))
 
 (deftest test-index-by
