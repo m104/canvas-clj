@@ -1,0 +1,4 @@
+{:cards [{:adjective "Fading", :slots {:red [:texture], :blue [:hue]}}
+         {:adjective "Wandering", :slots {:yellow [:texture :tone], :green [:texture]}}
+         {:noun "Expanse", :slots {:yellow [:tone], :blue [:texture :tone]}}
+         {:noun "Truth", :slots {:blue [:shape, :hue], :purple [:shape]}}]}
