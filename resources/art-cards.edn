@@ -1,0 +1,8 @@
+{:cards
+ [{:adjective "Fading", :slots {:red [:texture], :blue [:hue]}}
+  {:adjective "Wandering", :slots {:yellow [:texture :tone], :green [:texture]}}
+  {:adjective "Divine", :slots {:red [:shape :tone], :purple [:shape]}}
+  {:adjective "Precious", :slots {:red [:shape :texture], :yellow [:bonus-tone]}}
+  {:noun "Complexity", :slots {:yellow [:texture], :blue [:shape]}}
+  {:noun "Expanse", :slots {:yellow [:tone], :blue [:texture :tone]}}
+  {:noun "Truth", :slots {:blue [:shape, :hue], :purple [:shape]}}]}
