@@ -1,5 +1,6 @@
 (ns clj-canvas.core
   (:require [clj-canvas.data :as data]
+            [clj-canvas.coll :as coll]
             [clj-canvas.painting :as painting]
             [clj-canvas.scoring :as scoring]
             [clojure.set :as set]
@@ -30,7 +31,6 @@
 painting
 painting2
 painting3
-
 
 (for [painting [painting painting2 painting3]
       scoring-name ["Variety" "Repetition" "Composition" "Consistency"]]

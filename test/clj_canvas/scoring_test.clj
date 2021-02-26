@@ -4,11 +4,15 @@
             [clj-canvas.scoring :as scoring]
             [clj-canvas.data :as data]))
 
+(defn build-painting
+  [art-card-names]
+  (let [art-cards (for [name art-card-names]
+                    (get data/art-cards-by-name name))]
+    (painting/make-painting art-cards)))
+
 (defn run-score
   [art-card-names scoring-card-name]
-  (let [art-cards (for [name art-card-names]
-                    (get data/art-cards-by-name name))
-        painting (painting/make-painting art-cards)
+  (let [painting (build-painting art-card-names)
         scoring-fn (get scoring/scoring-fns-by-card-name scoring-card-name)]
     (scoring-fn painting)))
 
@@ -25,4 +29,12 @@
   (testing "Consistency"
     (is (= 1 (run-score ["Wandering" "Fading" "Truth"] "Consistency")))
     (is (= 0 (run-score ["Divine" "Precious" "Truth"] "Consistency")))))
+
+(deftest test-score-bonuses
+  (testing "With no bonus"
+    (is (= 0 (scoring/score-bonuses
+              (build-painting ["Wandering" "Fading" "Truth"])))))
+  (testing "With 1 bonus"
+    (is (= 1 (scoring/score-bonuses
+              (build-painting ["Divine" "Precious" "Truth"]))))))
 

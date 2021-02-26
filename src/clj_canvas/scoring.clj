@@ -71,5 +71,5 @@
         bonuses (occurance-map data/bonuses icons)]
     (reduce + (for [[bonus mult] bonuses]
                 (* mult (get elements
-                             (get 'data/bonus-map bonus)
+                             (get data/bonus-map bonus)
                              0))))))
