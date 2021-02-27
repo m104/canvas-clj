@@ -56,6 +56,8 @@
                           :green [:texture]
                           :red [:texture]}]
       (is (= "Fading Expanse" (:name painting)))
+      (is (= "Fading Wandering Expanse" (:full-name painting)))
+      (is (= good-set (:cards painting)))
       (is (= expected-slots
              (:slots painting)))
       (is (= (painting/slot-combinations expected-slots)

@@ -7,7 +7,6 @@
             [clojure.math.numeric-tower :as Math])
   (:gen-class))
 
-
 (def scoring-fns-by-card-name
   {"Composition" ; Score if all 5 of the slots have icons.
     ; Bonus icons are also counted as filling slots.
@@ -39,6 +38,23 @@
              (filter #(contains? data/elements %)
                      (flatten (vals (:slots painting))))))
        1
+       0))
+
+   "Emphasis" ; Exactly 1 color hue element
+   (fn [painting]
+     (if (= 1
+            (count
+             (filter #(= :hue %)
+                     (flatten (vals (:slots painting))))))
+       1
+       0))
+   "Style" ; Exactly 3 tone elements
+   (fn [painting]
+     (if (= 3
+            (count
+             (filter #(= :tone %)
+                     (flatten (vals (:slots painting))))))
+       1
        0))})
 
 (def scoring-cards
@@ -56,10 +72,6 @@
 
 (def scoring-cards-by-name
   (coll/index-by :name scoring-cards))
-
-(defn score-elements
-  [scoring-fn painting]
-  0)
 
 (defn score-bonuses
   [painting]

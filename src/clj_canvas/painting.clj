@@ -28,10 +28,14 @@
 (defn make-painting
   "Make a new paining from the 3 given cards"
   [cards]
-  (let [combined (apply merge (reverse cards))
-        slots (apply merge (map :slots (reverse cards)))]
+  (let [rev-cards (reverse cards)
+        combined (apply merge rev-cards)
+        slots (apply merge (map :slots rev-cards))]
     {:name (string/join
             " " [(:adjective combined) (:noun combined)])
+     :full-name (string/join
+                 " " (map #(or (:noun %) (:adjective %)) cards))
+     :cards cards
      :slots slots
      :slot-combinations (slot-combinations slots)
      :valid? (valid-cards-for-painting? cards)}))

@@ -25,15 +25,13 @@
 (def painting3
   (painting/make-painting
    (map (fn [name] (get data/art-cards-by-name name))
-        ["Fading" "Precious" "Expanse"])))
-
+        ["Wandering" "Divine" "Expanse"])))
 
 painting
 painting2
 painting3
 
 (for [painting [painting painting2 painting3]
-      scoring-name ["Variety" "Repetition" "Composition" "Consistency"]]
-  [(string/join " : " [(:name painting) scoring-name])
-   ((get scoring/scoring-fns-by-card-name scoring-name)
-    painting)])
+      scoring-card scoring/scoring-cards]
+  [(string/join " : " [(:name painting) (:name scoring-card)])
+   ((:scoring scoring-card) painting)])

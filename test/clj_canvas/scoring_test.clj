@@ -13,7 +13,8 @@
 (defn run-score
   [art-card-names scoring-card-name]
   (let [painting (build-painting art-card-names)
-        scoring-fn (get scoring/scoring-fns-by-card-name scoring-card-name)]
+        scoring-fn (:scoring (get scoring/scoring-cards-by-name
+                                  scoring-card-name))]
     (scoring-fn painting)))
 
 (deftest test-scoring-conditions
@@ -37,4 +38,3 @@
   (testing "With 1 bonus"
     (is (= 1 (scoring/score-bonuses
               (build-painting ["Divine" "Precious" "Truth"]))))))
-

@@ -1,4 +1,7 @@
 {:cards
  [{:name "Composition" :points [1 3 7]}
   {:name "Variety" :points [2 5 9]}
-  {:name "Repetition" :points [3 7 11 16]}]}
+  {:name "Repetition" :points [3 7 11 16]}
+  {:name "Emphasis" :points [1 4 11]}
+  {:name "Consistency" :points [1]}
+  {:name "Style" :points [4 9 15]}]}
