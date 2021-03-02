@@ -8,19 +8,19 @@
   (:gen-class))
 
 (def scoring-fns-by-card-name
-  {"Composition" ; Score if all 5 of the slots have icons
-    ; Bonus icons are also counted as filling slots
+  {"Composition" ; Score if all 5 of the swatches have icons
+    ; Bonus icons are also counted as filling swatches
    (fn [painting]
      (if (every?
-          (fn [slot-key]
-            (slot-key (:slots painting)))
-          data/slots)
+          (fn [swatch-key]
+            (swatch-key (:swatches painting)))
+          data/swatches)
        1
        0))
    "Variety" ; Score if all elements are present at least once
    (fn [painting]
      (if (set/superset?
-          (set (flatten (vals (:slots painting))))
+          (set (flatten (vals (:swatches painting))))
           data/elements)
        1
        0))
@@ -29,14 +29,14 @@
      (int
       (Math/floor
        (/ (apply max
-                 (for [combo (:slot-combinations painting)]
+                 (for [combo (:swatch-combinations painting)]
                    (count (filter #(= :shape %) (vals combo))))) 2))))
    "Consistency" ; Score with exactly 6 visible elements
    (fn [painting]
      (if (= 6
             (count
              (filter #(contains? data/elements %)
-                     (flatten (vals (:slots painting))))))
+                     (flatten (vals (:swatches painting))))))
        1
        0))
 
@@ -45,7 +45,7 @@
      (if (= 1
             (count
              (filter #(= :hue %)
-                     (flatten (vals (:slots painting))))))
+                     (flatten (vals (:swatches painting))))))
        1
        0))
    "Style" ; At least 3 tone elements
@@ -53,17 +53,17 @@
      (if (>= 3
              (count
               (filter #(= :tone %)
-                      (flatten (vals (:slots painting))))))
+                      (flatten (vals (:swatches painting))))))
        1
        0))
    "Movement" ; 3 matching elements in a row
    (fn [_] 0)
 
-   "Symmetry" ; 2 matching elements in either of the slot pairs:
+   "Symmetry" ; 2 matching elements in either of the swatch pairs:
    ; (red and purple) or (yellow and blue)
    (fn [_] 0)
 
-   "Proximity" ; Sets of shate and hue elements in adjacent slots.
+   "Proximity" ; Sets of shate and hue elements in adjacent swatches.
    ; Note: each element can only be used in one set
    (fn [_] 0)
 
@@ -100,7 +100,7 @@
   (defn occurance-map
     [allow-list coll]
     (coll/count-by-values (filter (fn [x] (contains? allow-list x)) coll)))
-  (let [icons (flatten (vals (:slots painting)))
+  (let [icons (flatten (vals (:swatches painting)))
         elements (occurance-map data/elements icons)
         bonuses (occurance-map data/bonuses icons)]
     (reduce + (for [[bonus mult] bonuses]

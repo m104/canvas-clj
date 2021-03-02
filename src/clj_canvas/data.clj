@@ -7,7 +7,7 @@
   (:gen-class))
 
 (def ribbons [:red :green :blue :purple])
-(def slots [:red :yellow :green :blue :purple])
+(def swatches [:red :yellow :green :blue :purple])
 (def bonus-map {:bonus-tone :tone
                 :bonus-hue :hue
                 :bonus-texture :texture

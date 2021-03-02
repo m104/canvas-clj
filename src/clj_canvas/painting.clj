@@ -14,15 +14,15 @@
                (<= 1 nouns)
                (>= 2 nouns))))))
 
-(defn slot-combinations
-  "Return a list of all possible slot combinations for scoring"
-  [slots]
-  (cond (empty? slots) nil
-        (= 1 (count slots)) (let [[key values] (first slots)]
-                              (for [value values] {key value}))
-        :else (let [key (first (keys slots))]
-                (for [single (slot-combinations (select-keys slots [key]))
-                      rest (slot-combinations (dissoc slots key))]
+(defn swatch-combinations
+  "Return a list of all possible swatch combinations for scoring"
+  [swatches]
+  (cond (empty? swatches) nil
+        (= 1 (count swatches)) (let [[key values] (first swatches)]
+                                 (for [value values] {key value}))
+        :else (let [key (first (keys swatches))]
+                (for [single (swatch-combinations (select-keys swatches [key]))
+                      rest (swatch-combinations (dissoc swatches key))]
                   (merge single rest)))))
 
 (defn make-painting
@@ -30,12 +30,12 @@
   [cards]
   (let [rev-cards (reverse cards)
         combined (apply merge rev-cards)
-        slots (apply merge (map :slots rev-cards))]
+        swatches (apply merge (map :swatches rev-cards))]
     {:name (string/join
             " " [(:adjective combined) (:noun combined)])
      :full-name (string/join
                  " " (map #(or (:noun %) (:adjective %)) cards))
      :cards cards
-     :slots slots
-     :slot-combinations (slot-combinations slots)
+     :swatches swatches
+     :swatch-combinations (swatch-combinations swatches)
      :valid? (valid-cards-for-painting? cards)}))

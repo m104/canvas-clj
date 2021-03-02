@@ -29,18 +29,18 @@
       (is (= false
              (painting/valid-cards-for-painting? input))))))
 
-(deftest test-slot-combinations
-  (testing "simple slots"
+(deftest test-swatch-combinations
+  (testing "simple swatches"
     (let [input {:yellow [:hue]}
           expected [{:yellow :hue}]]
-      (is (= expected (painting/slot-combinations input)))))
-  (testing "complex slots"
+      (is (= expected (painting/swatch-combinations input)))))
+  (testing "complex swatches"
     (let [input {:yellow [:hue :tone] :purple [:shape :hue]}
           expected [{:yellow :hue :purple :shape}
                     {:yellow :hue :purple :hue}
                     {:yellow :tone :purple :shape}
                     {:yellow :tone :purple :hue}]]
-      (is (= expected (painting/slot-combinations input))))))
+      (is (= expected (painting/swatch-combinations input))))))
 
 (deftest test-make-painting
   (testing "good card sets"
@@ -51,16 +51,16 @@
         (is (:valid? painting)))))
   (testing "painting composition"
     (let [painting (painting/make-painting good-set)
-          expected-slots {:yellow [:texture :tone]
-                          :blue [:hue]
-                          :green [:texture]
-                          :red [:texture]}]
+          expected-swatches {:yellow [:texture :tone]
+                             :blue [:hue]
+                             :green [:texture]
+                             :red [:texture]}]
       (is (= "Fading Expanse" (:name painting)))
       (is (= "Fading Wandering Expanse" (:full-name painting)))
       (is (= good-set (:cards painting)))
-      (is (= expected-slots
-             (:slots painting)))
-      (is (= (painting/slot-combinations expected-slots)
-             (:slot-combinations painting)))
+      (is (= expected-swatches
+             (:swatches painting)))
+      (is (= (painting/swatch-combinations expected-swatches)
+             (:swatch-combinations painting)))
       (is (= true (:valid? painting))))))
 
