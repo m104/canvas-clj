@@ -1,8 +1,63 @@
 {:cards
- [{:adjective "Fading", :slots {:red [:texture], :blue [:hue]}}
-  {:adjective "Wandering", :slots {:yellow [:texture :tone], :green [:texture]}}
+ [; Adjectives
+  {:adjective "Chosen", :slots {:red [:shape :texture], :green [:shape]}}
+  {:adjective "Corrupted", :slots {:yellow [:tone :shape]}}
+  {:adjective "Deep", :slots {:red [:hue :shape], :blue [:shape]}}
+  {:adjective "Delicate", :slots {:red [:hue], :purple [:hue :texture]}}
   {:adjective "Divine", :slots {:red [:shape :tone], :purple [:shape]}}
+  {:adjective "Exploring", :slots {:red [:tone], :purple [:bonus-hue]}}
+  {:adjective "Extreme", :slots {:yellow [:shape :texture], :green [:bonus-hue]}}
+  {:adjective "Fading", :slots {:red [:texture], :blue [:hue]}}
+  {:adjective "Fragile", :slots {:red [:shape], :yellow [:hue]}}
+  {:adjective "Forbidden", :slots {:red [:bonus-hue], :blue [:texture :tone]}}
+  {:adjective "Graceful", :slots {:yellow [:tone], :green [:hue :tone]}}
+  {:adjective "Harmonious", :slots {:red [:hue], :green [:tone]}}
+  {:adjective "Heavy", :slots {:red [:tone], :yellow [:shape :tone]}}
+  {:adjective "Heightened", :slots {:red [:tone], :yellow [:shape]}}
+  {:adjective "Illuminated", :slots {:red [:hue], :purple [:tone]}}
+  {:adjective "Imminent", :slots {:red [:texture], :blue [:shape]}}
+  {:adjective "Improbable", :slots {:red [:shape], :green [:hue]}}
+  {:adjective "Innocent", :slots {:yellow [:hue], :green [:shape]}}
+  {:adjective "Liberated", :slots {:red [:hue :texture], :green [:texture]}}
+  {:adjective "Masked", :slots {:yellow [:shape], :green [:shape :texture]}}
+  {:adjective "Melancholy", :slots {:red [:shape :tone], :blue [:tone]}}
+  {:adjective "Ominous", :slots {:red [:texture], :purple [:tone]}}
+  {:adjective "Peaceful", :slots {:red [:hue], :yellow [:hue :tone]}}
   {:adjective "Precious", :slots {:red [:shape :texture], :yellow [:bonus-tone]}}
+  {:adjective "Risky", :slots {:red [:bonus-texture], :green [:shape :tone]}}
+  {:adjective "Sudden", :slots {:red [:tone], :green [:texture]}}
+  {:adjective "Unashamed", :slots {:red [:texture], :yellow [:bonus-shape]}}
+  {:adjective "Vast", :slots {:red [:bonus-shape], :purple [:hue :tone]}}
+  {:adjective "Wandering", :slots {:yellow [:texture :tone], :green [:texture]}}
+  {:adjective "Whimsical", :slots {:red [:hue], :blue [:texture]}}
+  ; Nouns
+  {:noun "Adventure", :slots {:green [:bonus-shape], :blue [:tone]}}
+  {:noun "Anxiety", :slots {:yellow [:hue :texture], :purple [:texture]}}
+  {:noun "Attraction", :slots {:green [:hue], :purple [:hue :shape]}}
+  {:noun "Bait", :slots {:green [:shape :texture], :purple [:texture]}}
+  {:noun "Beauty", :slots {:green [:hue], :blue [:shape]}}
+  {:noun "Childhood", :slots {:green [:texture :tone], :purple [:texture]}}
   {:noun "Complexity", :slots {:yellow [:texture], :blue [:shape]}}
+  {:noun "Curiosity", :slots {:green [:bonus-texture], :blue [:hue :tone]}}
+  {:noun "Darkness", :slots {:yellow [:bonus-texture], :purple [:hue]}}
+  {:noun "Dreams", :slots {:yellow [:tone], :purple [:hue]}}
+  {:noun "Escape", :slots {:green [:shape :texture], :blue [:texture]}}
   {:noun "Expanse", :slots {:yellow [:tone], :blue [:texture :tone]}}
-  {:noun "Truth", :slots {:blue [:shape, :hue], :purple [:shape]}}]}
+  {:noun "Freedom", :slots {:yellow [:tone], :purple [:shape]}}
+  {:noun "Game", :slots {:yellow [:shape], :blue [:bonus-texture]}}
+  {:noun "Mess", :slots {:blue [:shape], :purple [:texture]}}
+  {:noun "Mistake", :slots {:blue [:texture], :purple [:hue]}}
+  {:noun "Moment", :slots {:blue [:hue :texture], :purple [:bonus-tone]}}
+  {:noun "Nature", :slots {:yellow [:hue :shape], :blue [:bonus-tone]}}
+  {:noun "Nightmare", :slots {:green [:bonus-tone], :purple [:shape]}}
+  {:noun "Obstacle", :slots {:yellow [:texture], :blue [:tone]}}
+  {:noun "Perspective", :slots {:green [:hue :tone], :purple [:tone]}}
+  {:noun "Pride", :slots {:green [:hue :tone], :blue [:hue]}}
+  {:noun "Purpose", :slots {:blue [:tone], :purple [:texture :tone]}}
+  {:noun "Revolution", :slots {:yellow [:hue], :blue [:hue :shape]}}
+  {:noun "Sanctuary", :slots {:yellow [:hue], :purple [:hue :texture]}}
+  {:noun "Surrender", :slots {:green [:hue], :blue [:texture]}}
+  {:noun "Trap", :slots {:yellow [:texture], :purple [:bonus-shape]}}
+  {:noun "Truth", :slots {:blue [:shape :hue], :purple [:shape]}}
+  {:noun "View", :slots {:yellow [:shape], :purple [:shape :tone]}}
+  {:noun "Warning", :slots {:blue [:bonus-hue], :purple [:tone]}}]}
