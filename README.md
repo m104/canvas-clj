@@ -1,4 +1,5 @@
-# clj-canvas
+
+# clj-canvas [![CircleCI](https://circleci.com/gh/m104/clj-canvas.svg?style=svg)](https://circleci.com/gh/m104/clj-canvas)
 
 A Canvas board game simulator, in Clojure.
 
