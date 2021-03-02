@@ -8,8 +8,8 @@
   (:gen-class))
 
 (def scoring-fns-by-card-name
-  {"Composition" ; Score if all 5 of the slots have icons.
-    ; Bonus icons are also counted as filling slots.
+  {"Composition" ; Score if all 5 of the slots have icons
+    ; Bonus icons are also counted as filling slots
    (fn [painting]
      (if (every?
           (fn [slot-key]
@@ -48,14 +48,36 @@
                      (flatten (vals (:slots painting))))))
        1
        0))
-   "Style" ; Exactly 3 tone elements
+   "Style" ; At least 3 tone elements
    (fn [painting]
-     (if (= 3
-            (count
-             (filter #(= :tone %)
-                     (flatten (vals (:slots painting))))))
+     (if (>= 3
+             (count
+              (filter #(= :tone %)
+                      (flatten (vals (:slots painting))))))
        1
-       0))})
+       0))
+   "Movement" ; 3 matching elements in a row
+   (fn [_] 0)
+
+   "Symmetry" ; 2 matching elements in either of the slot pairs:
+   ; (red and purple) or (yellow and blue)
+   (fn [_] 0)
+
+   "Proximity" ; Sets of shate and hue elements in adjacent slots.
+   ; Note: each element can only be used in one set
+   (fn [_] 0)
+
+   "Proportion" ; At least 3 of one element and at least 2 of another element
+   (fn [_] 0)
+
+   "Hierarchy" ; The number of tone elements is greater than or equal to
+   ; the number of any other element
+   (fn [_] 0)
+
+   "Space" ; Hue element and a non-adjacent shape element
+   ; Can be scored more than once
+   ; Each element can only be counted once per scoring condition
+   (fn [_] 0)})
 
 (def scoring-cards
   (for [card (->> "scoring-cards.edn"
