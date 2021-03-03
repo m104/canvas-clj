@@ -17,20 +17,6 @@
           data/swatches)
        1
        0))
-   "Variety" ; Score if all elements are present at least once
-   (fn [painting]
-     (if (set/superset?
-          (set (flatten (vals (:swatches painting))))
-          data/elements)
-       1
-       0))
-   "Repetition" ; Score pairs of 2 shape elements
-   (fn [painting]
-     (int
-      (Math/floor
-       (/ (apply max
-                 (for [combo (:swatch-combinations painting)]
-                   (count (filter #(= :shape %) (vals combo))))) 2))))
    "Consistency" ; Score with exactly 6 visible elements
    (fn [painting]
      (if (= 6
@@ -39,7 +25,6 @@
                      (flatten (vals (:swatches painting))))))
        1
        0))
-
    "Emphasis" ; Exactly 1 color hue element
    (fn [painting]
      (if (= 1
@@ -48,6 +33,27 @@
                      (flatten (vals (:swatches painting))))))
        1
        0))
+   "Hierarchy" ; The number of tone elements is greater than or equal to
+   ; the number of any other element
+   (fn [_] 0)
+   "Movement" ; 3 matching elements in a row
+   (fn [_] 0)
+   "Proportion" ; At least 3 of one element and at least 2 of another element
+   (fn [_] 0)
+   "Proximity" ; Sets of shate and hue elements in adjacent swatches.
+   ; Note: each element can only be used in one set
+   (fn [_] 0)
+   "Repetition" ; Score pairs of 2 shape elements
+   (fn [painting]
+     (int
+      (Math/floor
+       (/ (apply max
+                 (for [combo (:swatch-combinations painting)]
+                   (count (filter #(= :shape %) (vals combo))))) 2))))
+   "Space" ; Hue element and a non-adjacent shape element
+   ; Can be scored more than once
+   ; Each element can only be counted once per scoring condition
+   (fn [_] 0)
    "Style" ; At least 3 tone elements
    (fn [painting]
      (if (>= 3
@@ -56,28 +62,16 @@
                       (flatten (vals (:swatches painting))))))
        1
        0))
-   "Movement" ; 3 matching elements in a row
-   (fn [_] 0)
-
    "Symmetry" ; 2 matching elements in either of the swatch pairs:
    ; (red and purple) or (yellow and blue)
    (fn [_] 0)
-
-   "Proximity" ; Sets of shate and hue elements in adjacent swatches.
-   ; Note: each element can only be used in one set
-   (fn [_] 0)
-
-   "Proportion" ; At least 3 of one element and at least 2 of another element
-   (fn [_] 0)
-
-   "Hierarchy" ; The number of tone elements is greater than or equal to
-   ; the number of any other element
-   (fn [_] 0)
-
-   "Space" ; Hue element and a non-adjacent shape element
-   ; Can be scored more than once
-   ; Each element can only be counted once per scoring condition
-   (fn [_] 0)})
+   "Variety" ; Score if all elements are present at least once
+   (fn [painting]
+     (if (set/superset?
+          (set (flatten (vals (:swatches painting))))
+          data/elements)
+       1
+       0))})
 
 (def scoring-cards
   (for [card (->> "scoring-cards.edn"

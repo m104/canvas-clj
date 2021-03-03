@@ -18,18 +18,21 @@
     (scoring-fn painting)))
 
 (deftest test-scoring-conditions
-  (testing "Variety"
-    (is (= 1 (run-score ["Wandering" "Fading" "Truth"] "Variety")))
-    (is (= 0 (run-score ["Divine" "Precious" "Truth"] "Variety"))))
   (testing "Composition"
     (is (= 1 (run-score ["Wandering" "Fading" "Truth"] "Composition")))
     (is (= 0 (run-score ["Divine" "Precious" "Truth"] "Composition"))))
+  (testing "Consistency"
+    (is (= 1 (run-score ["Wandering" "Fading" "Truth"] "Consistency")))
+    (is (= 0 (run-score ["Divine" "Precious" "Truth"] "Consistency"))))
+  (testing "Emphasis"
+    (is (= 1 (run-score ["Wandering" "Fading" "Truth"] "Emphasis")))
+    (is (= 0 (run-score ["Wandering" "Divine" "Expanse"] "Emphasis"))))
   (testing "Repetition"
     (is (= 1 (run-score ["Divine" "Precious" "Truth"] "Repetition")))
     (is (= 0 (run-score ["Wandering" "Fading" "Truth"] "Repetition"))))
-  (testing "Consistency"
-    (is (= 1 (run-score ["Wandering" "Fading" "Truth"] "Consistency")))
-    (is (= 0 (run-score ["Divine" "Precious" "Truth"] "Consistency")))))
+  (testing "Variety"
+    (is (= 1 (run-score ["Wandering" "Fading" "Truth"] "Variety")))
+    (is (= 0 (run-score ["Divine" "Precious" "Truth"] "Variety")))))
 
 (deftest test-score-bonuses
   (testing "With no bonus"
@@ -38,3 +41,4 @@
   (testing "With 1 bonus"
     (is (= 1 (scoring/score-bonuses
               (build-painting ["Divine" "Precious" "Truth"]))))))
+
