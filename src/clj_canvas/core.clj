@@ -31,16 +31,19 @@ painting
 painting2
 painting3
 
-  (let [chosen-element :tone
-           other-elements (set/difference data/elements #{chosen-element})
-           elements (filter #(contains? data/elements %)
-                            (flatten (vals (:swatches painting3))))
-           counts (coll/count-by-values elements)
-           chosen-count (chosen-element counts 0)
-           other-count (apply max (vals (select-keys counts other-elements)))]
-    chosen-count
-    other-count
-    (>= chosen-count other-count))
+(let [pairs [[:red :purple] [:yellow :blue]]
+      swatches (:swatches painting3)
+      paired-elements (for [[left right] pairs]
+                        [(filter #(contains? data/elements %)
+                                 (left swatches))
+                         (filter #(contains? data/elements %)
+                                 (right swatches))])
+      matching-pairs (filter #(not-empty (set/intersection
+                                          (set (first %))
+                                          (set (last %)))) paired-elements)]
+  matching-pairs
+  )
+
 
 (for [painting [painting painting2 painting3]
       scoring-card scoring/scoring-cards]

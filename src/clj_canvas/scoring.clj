@@ -50,7 +50,7 @@
    (fn [_] 0)
    "Proportion" ; At least 3 of one element and at least 2 of another element
    (fn [_] 0)
-   "Proximity" ; Sets of shate and hue elements in adjacent swatches.
+   "Proximity" ; Sets of shade and hue elements in adjacent swatches.
    ; Note: each element can only be used in one set
    (fn [_] 0)
    "Repetition" ; Score pairs of 2 shape elements
@@ -74,7 +74,21 @@
        0))
    "Symmetry" ; 2 matching elements in either of the swatch pairs:
    ; (red and purple) or (yellow and blue)
-   (fn [_] 0)
+   (fn [painting]
+     (let [pairs [[:red :purple] [:yellow :blue]]
+           swatches (:swatches painting)
+           paired-elements (for [[left right] pairs]
+                             [(filter #(contains? data/elements %)
+                                      (left swatches))
+                              (filter #(contains? data/elements %)
+                                      (right swatches))])
+           matching-pairs (filter #(not-empty (set/intersection
+                                               (set (first %))
+                                               (set (last %)))) paired-elements)]
+       (if (<= 1
+               (count matching-pairs))
+         1
+         0)))
    "Variety" ; Score if all elements are present at least once
    (fn [painting]
      (if (set/superset?

@@ -36,6 +36,9 @@
   (testing "Style"
     (is (= 1 (run-score ["Wandering" "Divine" "Expanse"] "Style")))
     (is (= 0 (run-score ["Wandering" "Fading" "Truth"] "Style"))))
+  (testing "Symmetry"
+    (is (= 1 (run-score ["Wandering" "Divine" "Expanse"] "Symmetry")))
+    (is (= 0 (run-score ["Wandering" "Fading" "Truth"] "Symmetry"))))
   (testing "Variety"
     (is (= 1 (run-score ["Wandering" "Fading" "Truth"] "Variety")))
     (is (= 0 (run-score ["Divine" "Precious" "Truth"] "Variety")))))
