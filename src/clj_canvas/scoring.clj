@@ -35,7 +35,17 @@
        0))
    "Hierarchy" ; The number of tone elements is greater than or equal to
    ; the number of any other element
-   (fn [_] 0)
+   (fn [painting]
+     (let [chosen-element :tone
+           other-elements (set/difference data/elements #{chosen-element})
+           elements (filter #(contains? data/elements %)
+                            (flatten (vals (:swatches painting))))
+           counts (coll/count-by-values elements)
+           chosen-count (chosen-element counts 0)
+           other-count (apply max (vals (select-keys counts other-elements)))]
+       (if (>= chosen-count other-count)
+         1
+         0)))
    "Movement" ; 3 matching elements in a row
    (fn [_] 0)
    "Proportion" ; At least 3 of one element and at least 2 of another element
@@ -56,7 +66,7 @@
    (fn [_] 0)
    "Style" ; At least 3 tone elements
    (fn [painting]
-     (if (>= 3
+     (if (<= 3
              (count
               (filter #(= :tone %)
                       (flatten (vals (:swatches painting))))))

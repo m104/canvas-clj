@@ -27,9 +27,15 @@
   (testing "Emphasis"
     (is (= 1 (run-score ["Wandering" "Fading" "Truth"] "Emphasis")))
     (is (= 0 (run-score ["Wandering" "Divine" "Expanse"] "Emphasis"))))
+  (testing "Hierarchy"
+    (is (= 1 (run-score ["Wandering" "Divine" "Expanse"] "Hierarchy")))
+    (is (= 0 (run-score ["Wandering" "Fading" "Truth"] "Hierarchy"))))
   (testing "Repetition"
     (is (= 1 (run-score ["Divine" "Precious" "Truth"] "Repetition")))
     (is (= 0 (run-score ["Wandering" "Fading" "Truth"] "Repetition"))))
+  (testing "Style"
+    (is (= 1 (run-score ["Wandering" "Divine" "Expanse"] "Style")))
+    (is (= 0 (run-score ["Wandering" "Fading" "Truth"] "Style"))))
   (testing "Variety"
     (is (= 1 (run-score ["Wandering" "Fading" "Truth"] "Variety")))
     (is (= 0 (run-score ["Divine" "Precious" "Truth"] "Variety")))))
