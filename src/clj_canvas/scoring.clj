@@ -47,7 +47,20 @@
          1
          0)))
    "Movement" ; 3 matching elements in a row
-   (fn [_] 0)
+   ; Can be scored multiple times
+   ; Each element can only be used in one set
+   (fn [painting]
+     (let [swatches (:swatches painting)]
+       (reduce
+        +
+        (for [element data/elements]
+          (if (some true?
+                    (for [run (coll/runs-of-n 3 data/swatches)]
+                      (every?
+                       #(coll/in? element (% swatches))
+                       run)))
+            1
+            0)))))
    "Proportion" ; At least 3 of one element and at least 2 of another element
    (fn [_] 0)
    "Proximity" ; Sets of shade and hue elements in adjacent swatches.

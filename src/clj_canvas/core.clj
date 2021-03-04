@@ -12,7 +12,7 @@
   [& _]
   (println "Hello, World!"))
 
-(def painting
+(def painting1
   (painting/make-painting
    (map (fn [name] (get data/art-cards-by-name name))
         ["Wandering" "Fading" "Truth"])))
@@ -20,32 +20,22 @@
 (def painting2
   (painting/make-painting
    (map (fn [name] (get data/art-cards-by-name name))
-        ["Improbable" "Liberated" "Complexity"])))
+        ["Heightened" "Peaceful" "Trap"])))
 
 (def painting3
   (painting/make-painting
    (map (fn [name] (get data/art-cards-by-name name))
         ["Wandering" "Divine" "Expanse"])))
 
-painting
+painting1
 painting2
 painting3
 
-(let [pairs [[:red :purple] [:yellow :blue]]
-      swatches (:swatches painting3)
-      paired-elements (for [[left right] pairs]
-                        [(filter #(contains? data/elements %)
-                                 (left swatches))
-                         (filter #(contains? data/elements %)
-                                 (right swatches))])
-      matching-pairs (filter #(not-empty (set/intersection
-                                          (set (first %))
-                                          (set (last %)))) paired-elements)]
-  matching-pairs
-  )
+(:swatches (painting/make-painting
+            (map (fn [name] (get data/art-cards-by-name name))
+                 ["Peaceful" "Perspective" "Purpose"])))
 
-
-(for [painting [painting painting2 painting3]
+(for [painting [painting1 painting2 painting3]
       scoring-card scoring/scoring-cards]
   [(string/join " : " [(:name painting) (:name scoring-card)])
    ((:scoring scoring-card) painting)])

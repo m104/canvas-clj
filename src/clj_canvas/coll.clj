@@ -1,6 +1,23 @@
 (ns clj-canvas.coll
   (:gen-class))
 
+(defn in?
+  "Returns true if coll contains elm"
+  [elm coll]
+  (boolean (some #(= elm %) coll)))
+
+(defn runs-of-n
+  "Returns all sequential runs of n elements in the collection"
+  [n coll]
+  (loop [remaining (count coll)
+         coll coll
+         runs []]
+    (if (< remaining n)
+      runs
+      (recur (dec remaining)
+             (rest coll)
+             (conj runs (take n coll))))))
+
 (defn combinations
   "Return all unique n-sized combinations of the items in the collection"
   [n coll]

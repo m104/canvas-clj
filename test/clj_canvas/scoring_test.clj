@@ -30,7 +30,12 @@
   (testing "Hierarchy"
     (is (= 1 (run-score ["Wandering" "Divine" "Expanse"] "Hierarchy")))
     (is (= 0 (run-score ["Wandering" "Fading" "Truth"] "Hierarchy"))))
+  (testing "Movement"
+    (is (= 2 (run-score ["Peaceful" "Perspective" "Purpose"] "Movement")))
+    (is (= 1 (run-score ["Peaceful" "Beauty" "Game"] "Movement")))
+    (is (= 0 (run-score ["Heightened" "Peaceful" "Trap"] "Movement"))))
   (testing "Repetition"
+    (is (= 2 (run-score ["Masked" "Fragile" "Freedom"] "Repetition")))
     (is (= 1 (run-score ["Divine" "Precious" "Truth"] "Repetition")))
     (is (= 0 (run-score ["Wandering" "Fading" "Truth"] "Repetition"))))
   (testing "Style"
