@@ -40,7 +40,7 @@
            other-elements (set/difference data/elements #{chosen-element})
            elements (filter #(contains? data/elements %)
                             (flatten (vals (:swatches painting))))
-           counts (coll/count-by-values elements)
+           counts (frequencies elements)
            chosen-count (chosen-element counts 0)
            other-count (apply max (vals (select-keys counts other-elements)))]
        (if (>= chosen-count other-count)
@@ -130,7 +130,7 @@
   [painting]
   (defn occurance-map
     [allow-list coll]
-    (coll/count-by-values (filter (fn [x] (contains? allow-list x)) coll)))
+    (frequencies (filter (fn [x] (contains? allow-list x)) coll)))
   (let [icons (flatten (vals (:swatches painting)))
         elements (occurance-map data/elements icons)
         bonuses (occurance-map data/bonuses icons)]
@@ -138,3 +138,13 @@
                 (* mult (get elements
                              (get data/bonus-map bonus)
                              0))))))
+
+(defn score-painting
+  "Returns a hash-map with ribbon color keys and awared ribbon values"
+  [scoring-cards-by-ribbon painting]
+  (assoc
+   (reduce-kv #(assoc %1 %2 ((:scoring %3) painting))
+              {}
+              scoring-cards-by-ribbon)
+   data/bonus-ribbon
+   (score-bonuses painting)))

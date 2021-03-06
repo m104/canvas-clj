@@ -56,3 +56,20 @@
     (is (= 1 (scoring/score-bonuses
               (build-painting ["Divine" "Precious" "Truth"]))))))
 
+(def game-scoring-cards
+  {:red (get scoring/scoring-cards-by-name "Composition")
+   :green  (get scoring/scoring-cards-by-name "Variety")
+   :blue (get scoring/scoring-cards-by-name "Movement")
+   :purple (get scoring/scoring-cards-by-name "Emphasis")})
+
+(deftest test-score-painting
+  (testing "Painting with no bonuses"
+    (let [painting (build-painting ["Wandering" "Fading" "Truth"])
+          expected {:red 1, :green 1, :blue 1, :purple 1, :bonus 0}]
+      (is (= (scoring/score-painting game-scoring-cards painting)
+             expected))))
+  (testing "Painting with bonuses"
+    (let [painting (build-painting ["Heightened" "Peaceful" "Trap"])
+          expected {:red 0, :green 0, :blue 0, :purple 0, :bonus 1}]
+      (is (= (scoring/score-painting game-scoring-cards painting)
+             expected)))))

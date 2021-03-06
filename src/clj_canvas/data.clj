@@ -6,7 +6,9 @@
             [clj-canvas.data :as data])
   (:gen-class))
 
-(def ribbons [:red :green :blue :purple])
+(def scoring-ribbons [:red :green :blue :purple])
+(def bonus-ribbon :bonus)
+(def ribbons (conj scoring-ribbons bonus-ribbon))
 (def swatches [:red :yellow :green :blue :purple])
 (def bonus-map {:bonus-tone :tone
                 :bonus-hue :hue

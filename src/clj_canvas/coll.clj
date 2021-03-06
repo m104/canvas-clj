@@ -37,13 +37,3 @@
          (mapcat
           (fn [value]
             [(f value) value]) coll)))
-
-(defn count-by-values
-  "Returns a map where the number of ocurrances of the elements of the given collection
-   have been counted"
-  [coll]
-  (loop [[item & rest] coll
-         acc {}]
-    (if (not item)
-      acc
-      (recur rest (assoc acc item (inc (get acc item 0)))))))

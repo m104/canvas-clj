@@ -52,16 +52,3 @@
       (is (= expected
              (count
               (apply coll/combinations input)))))))
-
-(deftest test-count-by-values
-  (testing "empty collection"
-    (let [input nil
-          expected {}]
-      (is (= expected
-             (coll/count-by-values input)))))
-  (testing "complex collection"
-    (let [input ["a" "b" "c" "d" "b" "a" "f" "b" "g"]
-          expected {"a" 2 "b" 3 "c" 1 "d" 1 "f" 1 "g" 1}]
-      (is (= expected
-             (coll/count-by-values input))))))
-
