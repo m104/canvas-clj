@@ -12,12 +12,12 @@
                     ["Divine" "Precious" "Truth"]))
 
 (def good-sets [good-set good-set2])
-(def bad-sets [[]
-               [fading-card]
-               [fading-card wandering-card]
-               [fading-card expanse-card]
-               [fading-card fading-card expanse-card]
-               [wandering-card expanse-card expanse-card]])
+(def bad-sets [[fading-card fading-card expanse-card]
+               [wandering-card expanse-card expanse-card]
+               (map #(get data/art-cards-by-name %)
+                    ["Masked" "Ominous" "Vast"])
+               (map #(get data/art-cards-by-name %)
+                    ["Attraction" "Moment" "Purpose"])])
 
 (deftest test-valid-cards-for-painting?
   (testing "good card sets"
@@ -43,14 +43,20 @@
       (is (= expected (painting/swatch-combinations input))))))
 
 (deftest test-make-painting
+  (testing "bad card sets"
+    (doseq [input bad-sets]
+      (let [painting (apply painting/make-painting input)]
+        (is (= clojure.lang.PersistentArrayMap
+               (type painting)))
+        (is (not (:valid? painting))))))
   (testing "good card sets"
     (doseq [input good-sets]
-      (let [painting (painting/make-painting input)]
+      (let [painting (apply painting/make-painting input)]
         (is (= clojure.lang.PersistentArrayMap
                (type painting)))
         (is (:valid? painting)))))
   (testing "painting composition"
-    (let [painting (painting/make-painting good-set)
+    (let [painting (apply painting/make-painting good-set)
           expected-swatches {:yellow [:texture :tone]
                              :blue [:hue]
                              :green [:texture]

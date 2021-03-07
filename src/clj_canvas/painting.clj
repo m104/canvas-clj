@@ -26,9 +26,10 @@
                   (merge single rest)))))
 
 (defn make-painting
-  "Make a new paining from the 3 given cards"
-  [cards]
-  (let [rev-cards (reverse cards)
+  "Make a new paining from the given cards"
+  [top middle bottom]
+  (let [cards [top middle bottom]
+        rev-cards (reverse cards)
         combined (apply merge rev-cards)
         swatches (apply merge (map :swatches rev-cards))]
     {:name (string/join

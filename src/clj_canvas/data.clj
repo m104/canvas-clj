@@ -6,6 +6,8 @@
             [clj-canvas.data :as data])
   (:gen-class))
 
+(def max-art-cards 5)
+(def max-paintings 3)
 (def scoring-ribbons [:red :green :blue :purple])
 (def bonus-ribbon :bonus)
 (def ribbons (conj scoring-ribbons bonus-ribbon))

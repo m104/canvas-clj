@@ -8,7 +8,7 @@
   [art-card-names]
   (let [art-cards (for [name art-card-names]
                     (get data/art-cards-by-name name))]
-    (painting/make-painting art-cards)))
+    (apply painting/make-painting art-cards)))
 
 (defn run-score
   [art-card-names scoring-card-name]
