@@ -3,6 +3,7 @@
             [clj-canvas.coll :as coll]
             [clj-canvas.painting :as painting]
             [clj-canvas.scoring :as scoring]
+            [clj-canvas.player :as player]
             [clojure.set :as set]
             [clojure.string :as string])
   (:gen-class))

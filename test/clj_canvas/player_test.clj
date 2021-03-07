@@ -1,6 +1,7 @@
 (ns clj-canvas.player-test
   (:require [clojure.test :refer [deftest is testing]]
             [clj-canvas.data :as data]
+            [clj-canvas.painting :as painting]
             [clj-canvas.player :as player])
   (:gen-class))
 
@@ -69,10 +70,10 @@
           player (player-with-cards held-cards)
           chosen-cards [wandering-card truth-card mess-card]
           updated-player (apply player/create-painting player chosen-cards)
-          created-painting (first (:paintings updated-player))]
+          created-painting (first (:paintings updated-player))
+          expected-painting (apply painting/make-painting chosen-cards)]
       (is (= 1 (count (:paintings updated-player))))
-      (is (= "Wandering Truth"
-             (:name created-painting)))
+      (is (= expected-painting created-painting))
       (is (= #{} (:cards updated-player))))))
 
 (deftest test-add-ribbons
