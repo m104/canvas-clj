@@ -34,6 +34,9 @@
     (is (= 2 (run-score ["Peaceful" "Perspective" "Purpose"] "Movement")))
     (is (= 1 (run-score ["Peaceful" "Beauty" "Game"] "Movement")))
     (is (= 0 (run-score ["Heightened" "Peaceful" "Trap"] "Movement"))))
+  (testing "Proportion"
+    (is (= 1 (run-score ["Wandering" "Divine" "Expanse"] "Proportion")))
+    (is (= 0 (run-score ["Heightened" "Peaceful" "Trap"] "Proportion"))))
   (testing "Repetition"
     (is (= 2 (run-score ["Masked" "Fragile" "Freedom"] "Repetition")))
     (is (= 1 (run-score ["Divine" "Precious" "Truth"] "Repetition")))

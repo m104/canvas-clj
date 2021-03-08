@@ -21,14 +21,15 @@
 (def icons (set/union elements bonuses))
 
 (def art-cards
-  (->> "art-cards.edn"
-       io/resource
-       slurp
-       edn/read-string
-       :cards))
+  (for [card (->> "art-cards.edn"
+                  io/resource
+                  slurp
+                  edn/read-string
+                  :cards)]
+    (assoc card
+           :name
+           (or (:adjective card)
+               (:noun card)))))
 
 (def art-cards-by-name
-  (coll/index-by
-   (fn [card]
-     (or (:adjective card) (:noun card)))
-   art-cards))
+  (coll/index-by :name art-cards))

@@ -14,30 +14,23 @@
   (println "Hello, World!"))
 
 (def painting1
-  (painting/make-painting
-   (map (fn [name] (get data/art-cards-by-name name))
-        ["Wandering" "Fading" "Truth"])))
+  (apply painting/make-painting
+         (map (fn [name] (get data/art-cards-by-name name))
+              ["Wandering" "Fading" "Truth"])))
 
 (def painting2
-  (painting/make-painting
-   (map (fn [name] (get data/art-cards-by-name name))
-        ["Heightened" "Peaceful" "Trap"])))
+  (apply painting/make-painting
+         (map (fn [name] (get data/art-cards-by-name name))
+              ["Heightened" "Peaceful" "Trap"])))
 
 (def painting3
-  (painting/make-painting
-   (map (fn [name] (get data/art-cards-by-name name))
-        ["Wandering" "Divine" "Expanse"])))
+  (apply painting/make-painting
+         (map (fn [name] (get data/art-cards-by-name name))
+              ["Wandering" "Divine" "Expanse"])))
 
 painting1
 painting2
 painting3
-
-data/swatches
-(coll/runs-of-n 2 data/swatches)
-
-(:swatches (painting/make-painting
-            (map (fn [name] (get data/art-cards-by-name name))
-                 ["Peaceful" "Perspective" "Purpose"])))
 
 (for [painting [painting1 painting2 painting3]
       scoring-card scoring/scoring-cards]
@@ -50,11 +43,12 @@ data/swatches
    :blue (get scoring/scoring-cards-by-name "Repetition")
    :purple (get scoring/scoring-cards-by-name "Style")})
 
-(reduce #(assoc
-          %1
-          (:name %2)
-          (scoring/score-painting game-scoring-cards %2))
-        {}
-        [painting1 painting2 painting3])
-
 (scoring/score-painting game-scoring-cards painting3)
+
+(let [[first second] (sort > (vals {:hue 2 :shape 1 :tone 4}))]
+  (println first)
+  (println second)
+  [first second])
+
+(sort > (vals {:hue 2 :shape 1 :tone 4}))
+(nth (vec '(4 2 1)) 1)

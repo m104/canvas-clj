@@ -62,8 +62,18 @@
             1
             0)))))
    "Proportion" ; At least 3 of one element and at least 2 of another element
-   (fn [_] 0)
-   "Proximity" ; Sets of shade and hue elements in adjacent swatches.
+   (fn [painting]
+     (let [elements (filter #(coll/in? % data/elements)
+                            (flatten (vals (:swatches painting))))
+           element-counts (frequencies elements)
+           sorted-counts (vec (sort > (vals element-counts)))]
+       (if (and
+            (<= 2 (count sorted-counts))
+            (<= 3 (nth sorted-counts 0))
+            (<= 2 (nth sorted-counts 1)))
+         1
+         0)))
+   "Proximity" ; TODO: Sets of shade and hue elements in adjacent swatches.
    ; Note: each element can only be used in one set
    (fn [_] 0)
    "Repetition" ; Score pairs of 2 shape elements
@@ -73,7 +83,7 @@
        (/ (apply max
                  (for [combo (:swatch-combinations painting)]
                    (count (filter #(= :shape %) (vals combo))))) 2))))
-   "Space" ; Hue element and a non-adjacent shape element
+   "Space" ; TODO: Hue element and a non-adjacent shape element
    ; Can be scored more than once
    ; Each element can only be counted once per scoring condition
    (fn [_] 0)
