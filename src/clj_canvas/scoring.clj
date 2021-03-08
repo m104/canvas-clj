@@ -158,3 +158,11 @@
               scoring-cards-by-ribbon)
    data/bonus-ribbon
    (score-bonuses painting)))
+
+(defn score-ribbons
+  "Returns the points given for this scoring card and ribbon count"
+  [scoring-card ribbon-count]
+  (let [points-for-ribbon-count (into [0] (:points scoring-card))
+        points-index (min ribbon-count
+                          (dec (count points-for-ribbon-count)))]
+    (nth points-for-ribbon-count points-index)))

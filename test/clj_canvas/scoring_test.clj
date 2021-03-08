@@ -76,3 +76,18 @@
           expected {:red 0, :green 0, :blue 0, :purple 0, :bonus 1}]
       (is (= (scoring/score-painting game-scoring-cards painting)
              expected)))))
+
+(deftest test-score-ribbons
+  (let [scoring-card (get scoring/scoring-cards-by-name "Repetition")]
+    (testing "No ribbons"
+      (is (= 0 (scoring/score-ribbons scoring-card 0))))
+    (testing "1 ribbon"
+      (is (= 3 (scoring/score-ribbons scoring-card 1))))
+    (testing "2 ribbons"
+      (is (= 7 (scoring/score-ribbons scoring-card 2))))
+    (testing "3 ribbons"
+      (is (= 11 (scoring/score-ribbons scoring-card 3))))
+    (testing "4 ribbons"
+      (is (= 16 (scoring/score-ribbons scoring-card 4))))
+    (testing "5 ribbons (> max specified)"
+      (is (= 16 (scoring/score-ribbons scoring-card 5))))))

@@ -52,3 +52,6 @@ painting3
 
 (sort > (vals {:hue 2 :shape 1 :tone 4}))
 (nth (vec '(4 2 1)) 1)
+
+(scoring/score-ribbons (get scoring/scoring-cards-by-name "Repetition")
+                       4)
