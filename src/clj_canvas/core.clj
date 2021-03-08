@@ -45,13 +45,21 @@ painting3
 
 (scoring/score-painting game-scoring-cards painting3)
 
-(let [[first second] (sort > (vals {:hue 2 :shape 1 :tone 4}))]
-  (println first)
-  (println second)
-  [first second])
+(def ribbons
+  {:red 3
+   :green 2
+   :blue 2
+   :purple 1
+   :bonus 3})
+ribbons
 
-(sort > (vals {:hue 2 :shape 1 :tone 4}))
-(nth (vec '(4 2 1)) 1)
+(let [bonus-ribbon-count (get ribbons :bonus 0)
+      scoring-ribbon-counts (select-keys ribbons data/scoring-ribbons)]
+  (println bonus-ribbon-count scoring-ribbon-counts)
+  (+ (scoring/score-bonus-ribbons bonus-ribbon-count)
+     (apply +
+            (for [[ribbon count] scoring-ribbon-counts]
+              (scoring/score-ribbons (ribbon game-scoring-cards)
+                                     count)))))
 
-(scoring/score-ribbons (get scoring/scoring-cards-by-name "Repetition")
-                       4)
+

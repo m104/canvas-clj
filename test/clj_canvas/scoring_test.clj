@@ -79,15 +79,21 @@
 
 (deftest test-score-ribbons
   (let [scoring-card (get scoring/scoring-cards-by-name "Repetition")]
-    (testing "No ribbons"
-      (is (= 0 (scoring/score-ribbons scoring-card 0))))
-    (testing "1 ribbon"
-      (is (= 3 (scoring/score-ribbons scoring-card 1))))
-    (testing "2 ribbons"
-      (is (= 7 (scoring/score-ribbons scoring-card 2))))
-    (testing "3 ribbons"
-      (is (= 11 (scoring/score-ribbons scoring-card 3))))
-    (testing "4 ribbons"
-      (is (= 16 (scoring/score-ribbons scoring-card 4))))
-    (testing "5 ribbons (> max specified)"
-      (is (= 16 (scoring/score-ribbons scoring-card 5))))))
+    (doseq [[ribbons expected-points] {0 0
+                                       1 3
+                                       2 7
+                                       3 11
+                                       4 16
+                                       5 16}]
+      (testing (str "Scoring ribbons: " ribbons " => points: " expected-points)
+        (is (= expected-points
+               (scoring/score-ribbons scoring-card ribbons)))))))
+
+(deftest test-score-bonus-ribbons
+  (doseq [[ribbons expected-points] {0 0
+                                     1 2
+                                     2 4
+                                     3 6
+                                     4 8}]
+    (testing (str "Bonus ribbons: " ribbons " => points: " expected-points)
+      (is (= expected-points (scoring/score-bonus-ribbons ribbons))))))

@@ -51,7 +51,7 @@
    ; Each element can only be used in one set
    (fn [painting]
      (let [swatches (:swatches painting)]
-       (reduce
+       (apply
         +
         (for [element data/elements]
           (if (some true?
@@ -144,10 +144,10 @@
   (let [icons (flatten (vals (:swatches painting)))
         elements (occurance-map data/elements icons)
         bonuses (occurance-map data/bonuses icons)]
-    (reduce + (for [[bonus mult] bonuses]
-                (* mult (get elements
-                             (get data/bonus-map bonus)
-                             0))))))
+    (apply + (for [[bonus mult] bonuses]
+               (* mult (get elements
+                            (get data/bonus-map bonus)
+                            0))))))
 
 (defn score-painting
   "Returns a hash-map with ribbon color keys and awared ribbon values"
@@ -160,9 +160,26 @@
    (score-bonuses painting)))
 
 (defn score-ribbons
-  "Returns the points given for this scoring card and ribbon count"
+  "Returns the points awarded for the given scoring card and ribbon count"
   [scoring-card ribbon-count]
   (let [points-for-ribbon-count (into [0] (:points scoring-card))
         points-index (min ribbon-count
                           (dec (count points-for-ribbon-count)))]
     (nth points-for-ribbon-count points-index)))
+
+(defn score-bonus-ribbons
+  "Returns the points awarded for the given bonus ribbon count"
+  [ribbon-count]
+  (* ribbon-count 2))
+
+(defn score-all-ribbons
+  "Returns the points awarded for the given ribbon counts and scoring cards"
+  [scoring-cards-by-ribbon ribbon-counts]
+  (let [bonus-ribbon-count (get ribbon-counts :bonus 0)
+        scoring-ribbon-counts (select-keys ribbon-counts data/scoring-ribbons)]
+    (println bonus-ribbon-count scoring-ribbon-counts)
+    (+ (score-bonus-ribbons bonus-ribbon-count)
+       (apply +
+              (for [[ribbon count] scoring-ribbon-counts]
+                (score-ribbons (ribbon scoring-cards-by-ribbon)
+                               count))))))
