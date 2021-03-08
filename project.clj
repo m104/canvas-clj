@@ -8,4 +8,5 @@
   :main ^:skip-aot clj-canvas.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all
-                       :jvm-opts ["-Dclojure.compiler.direct-linking=true"]}})
+                       :jvm-opts ["-Dclojure.compiler.direct-linking=true"]}}
+  :plugins [[lein-cljfmt "0.7.0"]])
