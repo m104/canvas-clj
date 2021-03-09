@@ -1,11 +1,11 @@
 (ns clj-canvas.core
   (:require [clj-canvas.data :as data]
-            [clj-canvas.coll :as coll]
             [clj-canvas.painting :as painting]
             [clj-canvas.scoring :as scoring]
             [clj-canvas.player :as player]
             [clojure.set :as set]
-            [clojure.string :as string])
+            [clojure.string :as string]
+            [clojure.math.combinatorics :as comb])
   (:gen-class))
 
 (defn -main
@@ -62,4 +62,7 @@ ribbons
               (scoring/score-ribbons (ribbon game-scoring-cards)
                                      count)))))
 
+(set (flatten (map vals (map :swatches data/art-cards))))
 
+(time (count (filter painting/valid-cards-for-painting? (comb/combinations data/art-cards 3))))
+(time (count (comb/combinations data/art-cards 3)))

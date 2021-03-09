@@ -73,9 +73,12 @@
             (<= 2 (nth sorted-counts 1)))
          1
          0)))
-   "Proximity" ; TODO: Sets of shade and hue elements in adjacent swatches.
+   "Proximity" ; TODO: Sets of texture and tone elements in adjacent swatches.
    ; Note: each element can only be used in one set
-   (fn [_] 0)
+   (fn [painting]
+     (let [desired-elements #{:texture :tone}
+           runs (coll/runs-of-n 2 data/swatches)]))
+
    "Repetition" ; Score pairs of 2 shape elements
    (fn [painting]
      (int
@@ -87,11 +90,11 @@
    ; Can be scored more than once
    ; Each element can only be counted once per scoring condition
    (fn [_] 0)
-   "Style" ; At least 3 tone elements
+   "Style" ; At least 3 texture elements
    (fn [painting]
      (if (<= 3
              (count
-              (filter #(= :tone %)
+              (filter #(= :texture %)
                       (flatten (vals (:swatches painting))))))
        1
        0))
@@ -177,7 +180,6 @@
   [scoring-cards-by-ribbon ribbon-counts]
   (let [bonus-ribbon-count (get ribbon-counts :bonus 0)
         scoring-ribbon-counts (select-keys ribbon-counts data/scoring-ribbons)]
-    (println bonus-ribbon-count scoring-ribbon-counts)
     (+ (score-bonus-ribbons bonus-ribbon-count)
        (apply +
               (for [[ribbon count] scoring-ribbon-counts]

@@ -43,7 +43,7 @@
     (is (= 0 (run-score ["Wandering" "Fading" "Truth"] "Repetition"))))
   (testing "Style"
     (is (= 1 (run-score ["Wandering" "Divine" "Expanse"] "Style")))
-    (is (= 0 (run-score ["Wandering" "Fading" "Truth"] "Style"))))
+    (is (= 0 (run-score ["Heightened" "Peaceful" "Trap"] "Style"))))
   (testing "Symmetry"
     (is (= 1 (run-score ["Wandering" "Divine" "Expanse"] "Symmetry")))
     (is (= 0 (run-score ["Wandering" "Fading" "Truth"] "Symmetry"))))
@@ -97,3 +97,21 @@
                                      4 8}]
     (testing (str "Bonus ribbons: " ribbons " => points: " expected-points)
       (is (= expected-points (scoring/score-bonus-ribbons ribbons))))))
+
+(deftest test-score-all-ribbons
+  (testing "No ribbons"
+    (let [ribbons {}]
+      (is (= 0
+             (scoring/score-all-ribbons game-scoring-cards ribbons)))))
+  (testing "Bonus ribbons only"
+    (let [ribbons {:bonus 4}]
+      (is (= (* 4 2)
+             (scoring/score-all-ribbons game-scoring-cards ribbons)))))
+  (testing "Card ribbons only"
+    (let [ribbons {:blue 3}]
+      (is (= 12
+             (scoring/score-all-ribbons game-scoring-cards ribbons)))))
+  (testing "Mixed ribbons"
+    (let [ribbons {:red 2 :green 3 :blue 1 :purple 1 :bonus 3}]
+      (is (= (+ 3 13 3 1 (* 3 2))
+             (scoring/score-all-ribbons game-scoring-cards ribbons))))))
