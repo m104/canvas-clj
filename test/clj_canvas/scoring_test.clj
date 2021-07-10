@@ -5,12 +5,15 @@
             [clj-canvas.data :as data]))
 
 (defn build-painting
+  "Build a painting from art card names [top middle bottom]"
   [art-card-names]
   (let [art-cards (for [name art-card-names]
                     (get data/art-cards-by-name name))]
     (apply painting/make-painting art-cards)))
 
 (defn run-score
+  "Score a painting from art card names [top middle bottom] and a scoring
+   card name"
   [art-card-names scoring-card-name]
   (let [painting (build-painting art-card-names)
         scoring-fn (:scoring (get scoring/scoring-cards-by-name
@@ -37,10 +40,23 @@
   (testing "Proportion"
     (is (= 1 (run-score ["Wandering" "Divine" "Expanse"] "Proportion")))
     (is (= 0 (run-score ["Heightened" "Peaceful" "Trap"] "Proportion"))))
+  (testing "Proximity"
+    (is (= 3 (run-score ["Childhood" "Expanse" "Fading"] "Proximity")))
+    (is (= 2 (run-score ["Heavy" "Purpose" "Bait"] "Proximity")))
+    (is (= 1 (run-score ["Forbidden" "Wandering" "Attraction"] "Proximity")))
+    (is (= 0 (run-score ["Game" "Dreams" "Precious"] "Proximity"))))
   (testing "Repetition"
     (is (= 2 (run-score ["Masked" "Fragile" "Freedom"] "Repetition")))
     (is (= 1 (run-score ["Divine" "Precious" "Truth"] "Repetition")))
     (is (= 0 (run-score ["Wandering" "Fading" "Truth"] "Repetition"))))
+  (testing "Space"
+    (is (= 3 (run-score ["Truth" "Improbable" "Nature"] "Space")))
+    (is (= 3 (run-score ["Chosen" "Revolution" "Sanctuary"] "Space")))
+    (is (= 2 (run-score ["Innocent" "Delicate" "Mess"] "Space")))
+    (is (= 2 (run-score ["Peaceful" "Divine" "Complexity"] "Space")))
+    (is (= 2 (run-score ["Mistake" "Masked" "Deep"] "Space")))
+    (is (= 1 (run-score ["Revolution" "Truth" "Vast"] "Space")))
+    (is (= 0 (run-score ["Beauty" "Vast" "Risky"] "Space"))))
   (testing "Style"
     (is (= 1 (run-score ["Wandering" "Divine" "Expanse"] "Style")))
     (is (= 0 (run-score ["Heightened" "Peaceful" "Trap"] "Style"))))

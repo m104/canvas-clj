@@ -38,5 +38,4 @@
                  " " (map #(or (:noun %) (:adjective %)) cards))
      :cards cards
      :swatches swatches
-     :swatch-combinations (swatch-combinations swatches)
      :valid? (valid-cards-for-painting? cards)}))

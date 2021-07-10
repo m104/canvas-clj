@@ -7,6 +7,16 @@
             [clojure.math.numeric-tower :as Math])
   (:gen-class))
 
+(defn swatches-with-elements
+  "Returns a set of swatch colors that contain the given element"
+  [swatches element]
+  (reduce-kv (fn [acc color elements]
+               (if (coll/in? elements element)
+                 (conj acc color)
+                 acc))
+             #{}
+             swatches))
+
 (def scoring-fns-by-card-name
   {"Composition" ; Score if all 5 of the swatches have icons
     ; Bonus icons are also counted as filling swatches
@@ -57,13 +67,13 @@
           (if (some true?
                     (for [run (coll/runs-of-n 3 data/swatches)]
                       (every?
-                       #(coll/in? element (% swatches))
+                       #(coll/in? (% swatches) element)
                        run)))
             1
             0)))))
    "Proportion" ; At least 3 of one element and at least 2 of another element
    (fn [painting]
-     (let [elements (filter #(coll/in? % data/elements)
+     (let [elements (filter #(coll/in? data/elements %)
                             (flatten (vals (:swatches painting))))
            element-counts (frequencies elements)
            sorted-counts (vec (sort > (vals element-counts)))]
@@ -81,15 +91,34 @@
 
    "Repetition" ; Score pairs of 2 shape elements
    (fn [painting]
-     (int
-      (Math/floor
-       (/ (apply max
-                 (for [combo (:swatch-combinations painting)]
-                   (count (filter #(= :shape %) (vals combo))))) 2))))
-   "Space" ; TODO: Hue element and a non-adjacent shape element
+     (int (Math/floor
+           (/
+            (count (filter #(= :shape %)
+                           (flatten (vals (:swatches painting)))))
+            2))))
+   "Space" ; Hue element and a non-adjacent shape element
    ; Can be scored more than once
    ; Each element can only be counted once per scoring condition
-   (fn [_] 0)
+   (fn [painting]
+     (defn scorable-space-pair
+       [swatch1 swatch2]
+       (and
+        ; Not the same
+        (not (= swatch1 swatch2))
+        ; Not adjacent
+        (not (coll/in? (get data/adjacent-swatches-map swatch1)
+                       swatch2))))
+     (let [element1 :hue
+           element2 :shape
+           swatches (:swatches painting)
+           swatches1 (swatches-with-elements swatches element1)
+           swatches2 (swatches-with-elements swatches element2)
+           combos (coll/pair-combinations swatches1 swatches2)
+           valid-combos (for [combo combos]
+                          (filter (partial apply scorable-space-pair) combo))
+           combo-scores (map count valid-combos)
+           max-score (apply max combo-scores)]
+       max-score))
    "Style" ; At least 3 texture elements
    (fn [painting]
      (if (<= 3

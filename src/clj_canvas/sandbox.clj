@@ -2,6 +2,7 @@
   (:require [clj-canvas.data :as data]
             [clj-canvas.painting :as painting]
             [clj-canvas.scoring :as scoring]
+            [clj-canvas.coll :as coll]
             [clojure.math.combinatorics :as comb])
   (:gen-class))
 
@@ -11,15 +12,13 @@
    :blue (get scoring/scoring-cards-by-name "Repetition")
    :purple (get scoring/scoring-cards-by-name "Style")})
 
-(def first-round (take 5 (shuffle data/art-cards)))
-
+(def first-round (take 20 (shuffle data/art-cards)))
 first-round
 
 (def paintings
   (filter :valid? (map (partial apply painting/make-painting)
                        (mapcat comb/permutations
                                (comb/combinations first-round 3)))))
-
 (count paintings)
 
 (take 10
@@ -31,3 +30,8 @@ first-round
                 (scoring/score-painting game-scoring-cards %))
                (map :name (:cards %)))
              paintings)))
+
+(def painting (apply painting/make-painting
+                     (map #(get data/art-cards-by-name %)
+                          ["Truth" "Improbable" "Nature"])))
+painting

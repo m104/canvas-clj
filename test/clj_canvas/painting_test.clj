@@ -66,7 +66,5 @@
       (is (= good-set (:cards painting)))
       (is (= expected-swatches
              (:swatches painting)))
-      (is (= (painting/swatch-combinations expected-swatches)
-             (:swatch-combinations painting)))
       (is (= true (:valid? painting))))))
 
