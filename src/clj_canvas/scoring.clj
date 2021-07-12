@@ -52,7 +52,9 @@
                             (flatten (vals (:swatches painting))))
            counts (frequencies elements)
            chosen-count (chosen-element counts 0)
-           other-count (apply max (vals (select-keys counts other-elements)))]
+           other-counts (vals (select-keys counts other-elements))
+           other-count (if (empty? other-counts) 0
+                           (apply max other-counts))]
        (if (>= chosen-count other-count)
          1
          0)))
@@ -83,7 +85,7 @@
             (<= 2 (nth sorted-counts 1)))
          1
          0)))
-   "Proximity" ; TODO: Sets of texture and tone elements in adjacent swatches.
+   "Proximity" ; Sets of texture and tone elements in adjacent swatches.
    ; Note: each element can only be used in one set
    (fn [painting]
      (defn scorable-proximity-pair

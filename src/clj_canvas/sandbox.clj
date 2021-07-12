@@ -2,14 +2,13 @@
   (:require [clj-canvas.data :as data]
             [clj-canvas.painting :as painting]
             [clj-canvas.scoring :as scoring]
-            [clj-canvas.coll :as coll]
             [clojure.math.combinatorics :as comb])
   (:gen-class))
 
 (def game-scoring-cards
-  {:red (get scoring/scoring-cards-by-name "Composition")
-   :green  (get scoring/scoring-cards-by-name "Variety")
-   :blue (get scoring/scoring-cards-by-name "Repetition")
+  {:red (get scoring/scoring-cards-by-name "Space")
+   :green  (get scoring/scoring-cards-by-name "Hierarchy")
+   :blue (get scoring/scoring-cards-by-name "Symmetry")
    :purple (get scoring/scoring-cards-by-name "Style")})
 
 (def first-round (take 20 (shuffle data/art-cards)))
@@ -24,14 +23,15 @@ first-round
 (take 10
       (sort-by
        #(- (first %))
-       (map  #(list
-               (scoring/score-all-ribbons
-                game-scoring-cards
-                (scoring/score-painting game-scoring-cards %))
-               (map :name (:cards %)))
+       (map  (fn [painting]
+               (let [ribbons (scoring/score-painting game-scoring-cards painting)]
+                 (list
+                  (scoring/score-all-ribbons game-scoring-cards ribbons)
+                  ribbons
+                  (map :name (:cards painting)))))
              paintings)))
 
 (def painting (apply painting/make-painting
                      (map #(get data/art-cards-by-name %)
-                          ["Truth" "Improbable" "Nature"])))
+                          ["Nightmare" "Melancholy" "Peaceful"])))
 painting

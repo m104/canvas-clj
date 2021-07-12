@@ -1,6 +1,5 @@
 (ns clj-canvas.player
-  (:require [clojure.set :as set]
-            [clj-canvas.data :as data]
+  (:require [clj-canvas.data :as data]
             [clj-canvas.painting :as painting])
   (:gen-class))
 
