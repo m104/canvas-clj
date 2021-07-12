@@ -86,15 +86,28 @@
    "Proximity" ; TODO: Sets of texture and tone elements in adjacent swatches.
    ; Note: each element can only be used in one set
    (fn [painting]
-     (let [desired-elements #{:texture :tone}
-           runs (coll/runs-of-n 2 data/swatches)]))
+     (defn scorable-proximity-pair
+       [swatch1 swatch2]
+       (coll/in? (get data/adjacent-swatches-map swatch1)
+                 swatch2))
+     (let [swatches (:swatches painting)
+           swatches1 (swatches-with-elements swatches :texture)
+           swatches2 (swatches-with-elements swatches :tone)
+           combos (coll/pair-combinations swatches1 swatches2)
+           valid-combos (for [combo combos]
+                          (filter (partial apply scorable-proximity-pair) combo))
+           scores (map count valid-combos)
+           max-score (if (empty? scores) 0
+                         (apply max scores))]
+       max-score))
 
    "Repetition" ; Score pairs of 2 shape elements
    (fn [painting]
      (int (Math/floor
            (/
-            (count (filter #(= :shape %)
-                           (flatten (vals (:swatches painting)))))
+            (count (filter
+                    #(= :shape %)
+                    (flatten (vals (:swatches painting)))))
             2))))
    "Space" ; Hue element and a non-adjacent shape element
    ; Can be scored more than once
@@ -108,16 +121,15 @@
         ; Not adjacent
         (not (coll/in? (get data/adjacent-swatches-map swatch1)
                        swatch2))))
-     (let [element1 :hue
-           element2 :shape
-           swatches (:swatches painting)
-           swatches1 (swatches-with-elements swatches element1)
-           swatches2 (swatches-with-elements swatches element2)
+     (let [swatches (:swatches painting)
+           swatches1 (swatches-with-elements swatches :hue)
+           swatches2 (swatches-with-elements swatches :shape)
            combos (coll/pair-combinations swatches1 swatches2)
            valid-combos (for [combo combos]
                           (filter (partial apply scorable-space-pair) combo))
-           combo-scores (map count valid-combos)
-           max-score (apply max combo-scores)]
+           scores (map count valid-combos)
+           max-score (if (empty? scores) 0
+                         (apply max scores))]
        max-score))
    "Style" ; At least 3 texture elements
    (fn [painting]
