@@ -30,8 +30,3 @@ first-round
                   ribbons
                   (map :name (:cards painting)))))
              paintings)))
-
-(def painting (apply painting/make-painting
-                     (map #(get data/art-cards-by-name %)
-                          ["Nightmare" "Melancholy" "Peaceful"])))
-painting
