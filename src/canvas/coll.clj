@@ -1,4 +1,4 @@
-(ns clj-canvas.coll
+(ns canvas.coll
   (:gen-class))
 
 (defn in?

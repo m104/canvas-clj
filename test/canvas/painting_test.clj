@@ -1,7 +1,7 @@
-(ns clj-canvas.painting-test
+(ns canvas.painting-test
   (:require [clojure.test :refer [deftest is testing]]
-            [clj-canvas.painting :as painting]
-            [clj-canvas.data :as data]))
+            [canvas.painting :as painting]
+            [canvas.data :as data]))
 
 (def fading-card (get data/art-cards-by-name "Fading"))
 (def wandering-card (get data/art-cards-by-name "Wandering"))

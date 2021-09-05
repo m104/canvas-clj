@@ -1,6 +1,6 @@
-(ns clj-canvas.player
-  (:require [clj-canvas.data :as data]
-            [clj-canvas.painting :as painting])
+(ns canvas.player
+  (:require [canvas.data :as data]
+            [canvas.painting :as painting])
   (:gen-class))
 
 (defn make-player

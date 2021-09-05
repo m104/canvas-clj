@@ -1,6 +1,6 @@
-(ns clj-canvas.scoring
-  (:require [clj-canvas.data :as data]
-            [clj-canvas.coll :as coll]
+(ns canvas.scoring
+  (:require [canvas.data :as data]
+            [canvas.coll :as coll]
             [clojure.edn :as edn]
             [clojure.java.io :as io]
             [clojure.set :as set]

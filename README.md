@@ -1,5 +1,5 @@
 
-# clj-canvas [![CircleCI](https://circleci.com/gh/m104/clj-canvas.svg?style=svg)](https://circleci.com/gh/m104/clj-canvas)
+# canvas-clj [![CircleCI](https://circleci.com/gh/m104/canvas-clj.svg?style=svg)](https://circleci.com/gh/m104/canvas-clj)
 
 A Canvas board game simulator, in Clojure.
 
@@ -11,7 +11,7 @@ Download from http://example.com/FIXME.
 
 FIXME: explanation
 
-    $ java -jar clj-canvas-0.1.0-standalone.jar [args]
+    $ java -jar canvas-clj-0.1.1-standalone.jar [args]
 
 ## Options
 

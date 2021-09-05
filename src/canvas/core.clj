@@ -1,4 +1,4 @@
-(ns clj-canvas.core
+(ns canvas.core
   (:gen-class))
 
 (defn -main

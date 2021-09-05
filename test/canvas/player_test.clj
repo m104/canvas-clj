@@ -1,8 +1,8 @@
-(ns clj-canvas.player-test
+(ns canvas.player-test
   (:require [clojure.test :refer [deftest is testing]]
-            [clj-canvas.data :as data]
-            [clj-canvas.painting :as painting]
-            [clj-canvas.player :as player])
+            [canvas.data :as data]
+            [canvas.painting :as painting]
+            [canvas.player :as player])
   (:gen-class))
 
 (def base-player (player/make-player "1"))

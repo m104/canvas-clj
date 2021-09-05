@@ -1,4 +1,4 @@
-(ns clj-canvas.painting
+(ns canvas.painting
   (:require [clojure.string :as string])
   (:gen-class))
 

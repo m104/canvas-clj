@@ -1,7 +1,7 @@
-(ns clj-canvas.sandbox
-  (:require [clj-canvas.data :as data]
-            [clj-canvas.painting :as painting]
-            [clj-canvas.scoring :as scoring]
+(ns canvas.sandbox
+  (:require [canvas.data :as data]
+            [canvas.painting :as painting]
+            [canvas.scoring :as scoring]
             [clojure.math.combinatorics :as comb])
   (:gen-class))
 

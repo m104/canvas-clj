@@ -1,9 +1,9 @@
-(ns clj-canvas.data
+(ns canvas.data
   (:require [clojure.edn :as edn]
             [clojure.set :as set]
             [clojure.java.io :as io]
-            [clj-canvas.coll :as coll]
-            [clj-canvas.data :as data])
+            [canvas.coll :as coll]
+            [canvas.data :as data])
   (:gen-class))
 
 (def max-art-cards 5)

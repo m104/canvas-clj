@@ -1,8 +1,8 @@
-(ns clj-canvas.scoring-test
+(ns canvas.scoring-test
   (:require [clojure.test :refer [deftest is testing]]
-            [clj-canvas.painting :as painting]
-            [clj-canvas.scoring :as scoring]
-            [clj-canvas.data :as data]))
+            [canvas.painting :as painting]
+            [canvas.scoring :as scoring]
+            [canvas.data :as data]))
 
 (defn build-painting
   "Build a painting from art card names [top middle bottom]"

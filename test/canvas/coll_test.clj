@@ -1,6 +1,6 @@
-(ns clj-canvas.coll-test
+(ns canvas.coll-test
   (:require [clojure.test :refer [deftest is testing]]
-            [clj-canvas.coll :as coll]))
+            [canvas.coll :as coll]))
 
 (deftest test-in?
   (testing "includes"
